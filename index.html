@@ -387,18 +387,123 @@ footer{
 .fade-up-3{animation-delay:.3s}
 .fade-up-4{animation-delay:.4s}
 
+/* MOBILE NAV HAMBURGER */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{width:22px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s;display:block}
+.mobile-menu{
+  display:none;position:fixed;top:64px;left:0;right:0;bottom:0;z-index:190;
+  background:rgba(8,10,13,0.98);backdrop-filter:blur(16px);
+  flex-direction:column;align-items:center;justify-content:center;gap:8px;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu a{
+  color:var(--text2);text-decoration:none;padding:14px 40px;
+  font-family:'Playfair Display',serif;font-size:18px;letter-spacing:2px;
+  border-radius:4px;transition:all .2s;width:100%;text-align:center;
+}
+.mobile-menu a:hover,.mobile-menu a.active{color:var(--gold);background:var(--glow)}
+.mobile-menu-btn{
+  background:var(--accent,#c9a84c);border:1px solid var(--gold);color:var(--bg);
+  padding:14px 40px;font-family:'Playfair Display',serif;font-size:14px;
+  letter-spacing:2px;border-radius:3px;cursor:pointer;margin-top:16px;
+  background:linear-gradient(135deg,var(--gold),#a07830);
+}
+
 /* MOBILE */
 @media(max-width:768px){
-  nav{padding:0 20px}
+  /* NAV */
+  nav{padding:0 16px}
   .nav-links{display:none}
-  .hero-content{padding:0 24px}
-  .section{padding:40px 24px}
-  footer{padding:24px;flex-direction:column;gap:12px;text-align:center}
-  .hero-stats{right:24px;bottom:40px;gap:24px}
-  .world-grid{grid-template-columns:1fr}
-  .about-content{grid-template-columns:1fr;gap:32px}
-  .author-card{flex-direction:column}
-  .reader-header{padding:10px 16px}
+  .nav-btn{display:none}
+  .hamburger{display:flex}
+
+  /* HERO */
+  .hero{height:auto;min-height:100svh;padding:80px 0 40px;align-items:flex-end}
+  .hero-content{padding:0 20px;max-width:100%}
+  .hero-title{font-size:clamp(42px,12vw,64px)}
+  .hero-subtitle{font-size:12px;letter-spacing:3px}
+  .hero-desc{font-size:15px;margin-bottom:24px}
+  .hero-actions{flex-direction:column;gap:10px}
+  .hero-actions .btn-gold,.hero-actions .btn-steel{width:100%;text-align:center;padding:14px}
+  .hero-stats{
+    position:relative;right:auto;bottom:auto;
+    display:flex;gap:0;margin:24px 20px 0;
+    background:rgba(14,17,23,0.8);border:1px solid var(--border2);border-radius:4px;
+    padding:16px 0;
+  }
+  .stat{flex:1;border-right:1px solid var(--border)}
+  .stat:last-child{border-right:none}
+  .stat-num{font-size:22px}
+  .stat-label{font-size:10px}
+  .gear-bg,.gear-bg2{display:none}
+
+  /* SECTIONS */
+  .section{padding:32px 16px}
+  .ornament{margin:4px 0}
+
+  /* START READING BLOCK */
+  .section > div[style*="grid-template-columns:1fr 1fr"]{
+    grid-template-columns:1fr !important;
+    gap:12px !important;
+  }
+
+  /* CHAPTER GRID */
+  .chap-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+
+  /* CHAPTER CARDS */
+  .chap-info{padding:8px 10px}
+  .chap-date{font-size:10px}
+
+  /* WORLD GRID */
+  .world-grid{grid-template-columns:1fr;gap:12px}
+  .world-item{padding:20px}
+
+  /* CHAPTER TABLE */
+  .chap-table td{padding:12px 10px;font-size:14px}
+  .chap-table .td-date{display:none}
+  .chap-table .td-num{width:60px;font-size:10px}
+
+  /* ABOUT */
+  .about-hero{padding:40px 16px}
+  .about-content{grid-template-columns:1fr;gap:24px;padding:32px 16px}
+  .author-card{flex-direction:column;padding:20px;gap:16px}
+  .author-avatar{width:70px;height:70px;font-size:28px}
+
+  /* SUPPORT BOX */
+  .support-box{padding:28px 16px}
+  .support-title{font-size:22px}
+  .support-btns{flex-direction:column;align-items:center}
+  .support-btns button{width:100%;max-width:320px}
+
+  /* READER */
+  .reader-header{
+    padding:8px 12px;
+    flex-wrap:wrap;gap:6px;
+    position:sticky;top:64px;
+  }
+  .reader-header > div:first-child{order:1;flex:1}
+  .reader-header > div:nth-child(2){order:3;width:100%;justify-content:space-between}
+  .reader-header > button:last-child{order:2}
+  .reader-nav{width:100%;justify-content:space-between}
+  .chap-sel{flex:1;font-size:12px}
+  .reader-nav-btn{font-size:10px;padding:6px 10px;letter-spacing:0}
+  .reader-title{font-size:11px;letter-spacing:1px}
+  .reader-pages{padding:0;gap:1px}
+  .reader-page-img img{width:100%;display:block}
+  .reader-bottom{flex-direction:column;gap:10px;padding:16px}
+  .reader-bottom .btn-steel,.reader-bottom .btn-gold{width:100%;text-align:center}
+
+  /* WORLD MAP */
+  .section > div[style*="text-align:center"]{padding:12px}
+
+  /* FOOTER */
+  footer{padding:20px 16px;flex-direction:column;gap:8px;text-align:center}
+  .footer-text{font-size:12px}
+}
+
+@media(max-width:380px){
+  .chap-grid{grid-template-columns:1fr}
+  .hero-title{font-size:38px}
 }
 
 /* CHAPTER GRID LAYOUT */
@@ -417,7 +522,19 @@ footer{
     <a href="#" onclick="showPage('about')" id="nav-about">Tác Giả</a>
   </div>
   <button class="nav-btn" onclick="showPage('chapters')">ĐỌC NGAY →</button>
+  <button class="hamburger" onclick="toggleMenu()" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#" onclick="showPage('home');toggleMenu()" id="mnav-home">Trang Chủ</a>
+  <a href="#" onclick="showPage('chapters');toggleMenu()" id="mnav-chapters">Đọc Truyện</a>
+  <a href="#" onclick="showPage('world');toggleMenu()" id="mnav-world">Thế Giới</a>
+  <a href="#" onclick="showPage('about');toggleMenu()" id="mnav-about">Tác Giả</a>
+  <button class="mobile-menu-btn" onclick="showReader('chuong-1');toggleMenu()">📖 ĐỌC CHƯƠNG 1</button>
+</div>
 
 <!-- ===== HOME PAGE ===== -->
 <div id="page-home" class="page active">
@@ -759,6 +876,24 @@ function showPage(name){
   const navEl=document.getElementById('nav-'+name);
   if(navEl)navEl.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleMenu(){
+  const menu=document.getElementById('mobile-menu');
+  const ham=document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  const isOpen=menu.classList.contains('open');
+  // Animate hamburger → X
+  const spans=ham.querySelectorAll('span');
+  if(isOpen){
+    spans[0].style.transform='rotate(45deg) translate(5px,5px)';
+    spans[1].style.opacity='0';
+    spans[2].style.transform='rotate(-45deg) translate(5px,-5px)';
+    document.body.style.overflow='hidden';
+  } else {
+    spans[0].style.transform='';spans[1].style.opacity='1';spans[2].style.transform='';
+    document.body.style.overflow='';
+  }
 }
 
 // READER
