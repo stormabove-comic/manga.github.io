@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storm Above — Vũ Điệu Khai Nguyên</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080a0d;
+  --bg2:#0e1117;
+  --bg3:#141820;
+  --bg4:#1c2230;
+  --gold:#c9a84c;
+  --gold2:#e8c97a;
+  --rust:#8b3a2a;
+  --rust2:#c4522e;
+  --steel:#4a5568;
+  --mist:#a0aec0;
+  --text:#dde2ec;
+  --text2:#8892a4;
+  --text3:#4a5568;
+  --border:#1e2535;
+  --border2:#2a3347;
+  --glow:rgba(201,168,76,0.15);
+}
+
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Lora',Georgia,serif;min-height:100vh;overflow-x:hidden}
+
+/* NOISE TEXTURE OVERLAY */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:1000;opacity:0.4;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;opacity:0.5}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:linear-gradient(to bottom,rgba(8,10,13,0.98),rgba(8,10,13,0.85));
+  border-bottom:1px solid rgba(201,168,76,0.15);
+  backdrop-filter:blur(12px);
+  padding:0 40px;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;font-size:22px;font-weight:400;letter-spacing:2px;
+  color:var(--gold);text-decoration:none;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo::before{content:'⚙';font-size:16px;animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.nav-links{display:flex;gap:2px}
+.nav-links a{
+  color:var(--text2);text-decoration:none;
+  padding:8px 18px;font-family:'Playfair Display',serif;font-size:12px;letter-spacing:1.5px;
+  border-radius:3px;transition:all .3s;
+}
+.nav-links a:hover{color:var(--gold);background:var(--glow)}
+.nav-links a.active{color:var(--gold)}
+.nav-btn{
+  background:transparent;border:1px solid var(--gold);color:var(--gold);
+  padding:8px 20px;border-radius:3px;font-family:'Playfair Display',serif;font-size:11px;
+  letter-spacing:2px;cursor:pointer;transition:all .3s;
+}
+.nav-btn:hover{background:var(--gold);color:var(--bg)}
+
+/* PAGES */
+.page{display:none;padding-top:64px;min-height:100vh}
+.page.active{display:block}
+
+/* ========== HOME PAGE ========== */
+
+/* HERO */
+.hero{
+  position:relative;height:100vh;min-height:700px;
+  display:flex;align-items:center;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 60% 40%,rgba(139,58,42,0.12) 0%,transparent 60%),
+    radial-gradient(ellipse at 20% 80%,rgba(201,168,76,0.06) 0%,transparent 50%),
+    linear-gradient(to bottom,var(--bg) 0%,#0a0d15 50%,var(--bg) 100%);
+}
+/* Animated gear shapes */
+.gear-bg{position:absolute;opacity:0.03;font-size:400px;top:-100px;right:-100px;animation:spinSlow 60s linear infinite;color:var(--gold)}
+.gear-bg2{position:absolute;opacity:0.02;font-size:250px;bottom:-50px;left:10%;animation:spinSlow 40s linear infinite reverse;color:var(--gold)}
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+
+.hero-content{position:relative;z-index:2;padding:0 80px;max-width:680px}
+.hero-eyebrow{
+  font-family:'Playfair Display',serif;font-size:11px;letter-spacing:5px;
+  color:var(--rust2);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';flex:1;max-width:40px;height:1px;background:var(--rust2)}
+.hero-title{
+  font-family:'Playfair Display',serif;font-size:clamp(48px,7vw,80px);
+  font-weight:900;line-height:0.95;letter-spacing:-1px;
+  margin-bottom:6px;
+  background:linear-gradient(135deg,#e8d5a3 0%,var(--gold) 40%,#a07830 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.hero-subtitle{
+  font-family:'Playfair Display',serif;font-size:14px;letter-spacing:5px;
+  color:var(--text2);margin-bottom:28px;
+  border-left:2px solid var(--rust2);padding-left:14px;
+}
+.hero-desc{
+  font-size:17px;line-height:1.8;color:var(--mist);
+  margin-bottom:36px;font-style:italic;
+  max-width:480px;
+}
+.hero-desc strong{color:var(--gold2);font-style:normal}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),#a07830);
+  color:var(--bg);border:none;padding:14px 32px;
+  font-family:'Playfair Display',serif;font-size:12px;letter-spacing:2px;font-weight:700;
+  cursor:pointer;border-radius:2px;transition:all .3s;
+  box-shadow:0 4px 20px rgba(201,168,76,0.3);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,168,76,0.4)}
+.btn-steel{
+  background:transparent;color:var(--text2);
+  border:1px solid var(--border2);
+  padding:14px 32px;font-family:'Playfair Display',serif;font-size:12px;letter-spacing:2px;
+  cursor:pointer;border-radius:2px;transition:all .3s;
+}
+.btn-steel:hover{border-color:var(--mist);color:var(--text)}
+
+.hero-stats{
+  position:absolute;right:80px;bottom:80px;z-index:2;
+  display:flex;gap:40px;
+}
+.stat{text-align:center}
+.stat-num{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:11px;letter-spacing:2px;color:var(--text3);margin-top:4px;text-transform:uppercase}
+
+/* DIVIDER */
+.ornament{
+  text-align:center;padding:20px 0;
+  color:var(--text3);font-size:18px;letter-spacing:8px;
+  display:flex;align-items:center;justify-content:center;gap:16px;
+}
+.ornament::before,.ornament::after{
+  content:'';flex:1;max-width:120px;height:1px;
+  background:linear-gradient(to right,transparent,var(--border2));
+}
+.ornament::after{background:linear-gradient(to left,transparent,var(--border2))}
+
+/* SECTION */
+.section{padding:60px 80px}
+.section-label{
+  font-family:'Playfair Display',serif;font-size:10px;letter-spacing:5px;
+  color:var(--rust2);margin-bottom:10px;text-transform:uppercase;
+}
+.section-title{
+  font-family:'Playfair Display',serif;font-size:clamp(28px,3vw,42px);
+  font-weight:700;color:var(--gold2);margin-bottom:8px;
+  line-height:1.2;
+}
+.section-desc{
+  font-size:16px;color:var(--text2);line-height:1.7;
+  max-width:560px;margin-bottom:40px;
+}
+
+/* WORLD MAP CARD */
+.world-card{
+  background:linear-gradient(135deg,var(--bg3),var(--bg2));
+  border:1px solid var(--border2);border-radius:4px;
+  padding:32px;display:flex;gap:32px;align-items:center;
+  position:relative;overflow:hidden;cursor:pointer;
+  transition:border-color .3s;
+}
+.world-card:hover{border-color:rgba(201,168,76,0.4)}
+.world-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,transparent,var(--gold),transparent);
+}
+.world-card-icon{font-size:80px;flex-shrink:0;opacity:0.8}
+.world-card-content{}
+.world-card-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold2);margin-bottom:8px}
+.world-card-desc{font-size:15px;color:var(--text2);line-height:1.7}
+
+/* CHAPTER GRID */
+.chapter-featured{
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:4px;overflow:hidden;position:relative;
+  cursor:pointer;transition:all .3s;
+}
+.chapter-featured:hover{border-color:rgba(201,168,76,0.3);transform:translateY(-3px)}
+.chapter-featured::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right,var(--rust2),var(--gold));
+  opacity:0;transition:opacity .3s;
+}
+.chapter-featured:hover::before{opacity:1}
+.chap-cover{
+  width:100%;aspect-ratio:9/14;
+  background:linear-gradient(160deg,#1a1205,#0d0f1a);
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;position:relative;overflow:hidden;
+}
+.chap-cover-img{width:100%;height:100%;object-fit:cover}
+.chap-overlay{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(to top,rgba(8,10,13,0.95),transparent);
+  padding:20px 16px 16px;
+}
+.chap-num{
+  font-family:'Playfair Display',serif;font-size:10px;letter-spacing:3px;
+  color:var(--rust2);margin-bottom:4px;
+}
+.chap-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--gold2);line-height:1.3}
+.chap-info{padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.chap-date{font-size:12px;color:var(--text3)}
+.chap-badge{
+  font-size:10px;font-family:'Playfair Display',serif;letter-spacing:1px;
+  padding:3px 10px;border-radius:2px;
+}
+.badge-new{background:rgba(196,82,46,0.2);color:var(--rust2);border:1px solid rgba(196,82,46,0.3)}
+.badge-read{background:rgba(74,85,104,0.2);color:var(--steel);border:1px solid var(--border)}
+
+/* CHAPTER LIST TABLE */
+.chap-table{width:100%;border-collapse:collapse}
+.chap-table tr{
+  border-bottom:1px solid var(--border);cursor:pointer;transition:background .2s;
+}
+.chap-table tr:hover{background:rgba(201,168,76,0.04)}
+.chap-table td{padding:14px 16px;font-size:15px}
+.chap-table .td-num{
+  font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px;
+  color:var(--text3);width:80px;
+}
+.chap-table .td-title{color:var(--text);font-weight:400}
+.chap-table .td-title:hover{color:var(--gold2)}
+.chap-table .td-date{color:var(--text3);font-size:13px;text-align:right;width:120px}
+.chap-table .td-new{width:60px;text-align:right}
+
+/* SUPPORT SECTION */
+.support-box{
+  background:linear-gradient(135deg,rgba(139,58,42,0.08),rgba(201,168,76,0.05));
+  border:1px solid rgba(201,168,76,0.15);border-radius:4px;
+  padding:48px;text-align:center;position:relative;overflow:hidden;
+}
+.support-box::before{
+  content:'⚙ ◆ ⚙';
+  font-size:12px;letter-spacing:8px;color:var(--text3);
+  display:block;margin-bottom:20px;
+}
+.support-title{font-family:'Playfair Display',serif;font-size:30px;color:var(--gold2);margin-bottom:12px}
+.support-desc{font-size:16px;color:var(--text2);line-height:1.7;max-width:500px;margin:0 auto 28px;font-style:italic}
+.support-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-coffee{
+  background:linear-gradient(135deg,#7c3c0a,#b8551a);
+  color:#fff;border:none;padding:13px 28px;
+  font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px;
+  cursor:pointer;border-radius:2px;transition:all .3s;
+}
+.btn-coffee:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(196,82,46,0.3)}
+.btn-discord{
+  background:linear-gradient(135deg,#2a2d6e,#3d4db0);
+  color:#fff;border:none;padding:13px 28px;
+  font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px;
+  cursor:pointer;border-radius:2px;transition:all .3s;
+}
+.btn-discord:hover{transform:translateY(-2px)}
+
+/* AUTHOR SECTION */
+.author-card{
+  display:flex;gap:36px;align-items:flex-start;
+  background:var(--bg3);border:1px solid var(--border2);
+  border-radius:4px;padding:36px;
+}
+.author-avatar{
+  width:100px;height:100px;border-radius:50%;
+  background:linear-gradient(135deg,var(--rust),var(--gold));
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px;flex-shrink:0;
+  border:2px solid rgba(201,168,76,0.3);
+}
+.author-name{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold2);margin-bottom:4px}
+.author-role{font-size:13px;letter-spacing:2px;color:var(--rust2);margin-bottom:12px;font-family:'Playfair Display',serif}
+.author-bio{font-size:15px;color:var(--text2);line-height:1.8;font-style:italic}
+.author-socials{display:flex;gap:10px;margin-top:14px}
+.social-btn{
+  padding:6px 16px;font-size:12px;font-family:'Playfair Display',serif;letter-spacing:1px;
+  border-radius:2px;cursor:pointer;transition:all .2s;border:1px solid var(--border2);
+  color:var(--text2);background:transparent;
+}
+.social-btn:hover{border-color:var(--gold);color:var(--gold)}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:32px 80px;
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--bg2);
+}
+.footer-logo{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold);letter-spacing:2px}
+.footer-text{font-size:13px;color:var(--text3);text-align:center}
+.footer-copy{font-size:12px;color:var(--text3);font-family:'Playfair Display',serif;letter-spacing:1px}
+
+/* ========== READER PAGE ========== */
+.reader-header{
+  position:sticky;top:64px;z-index:100;
+  background:rgba(8,10,13,0.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:12px 40px;display:flex;align-items:center;justify-content:space-between;
+}
+.reader-title{font-family:'Playfair Display',serif;font-size:13px;color:var(--gold2);letter-spacing:2px}
+.reader-nav{display:flex;gap:8px;align-items:center}
+.reader-nav-btn{
+  background:var(--bg4);border:1px solid var(--border2);color:var(--text2);
+  padding:7px 16px;border-radius:2px;font-family:'Playfair Display',serif;font-size:11px;
+  letter-spacing:1px;cursor:pointer;transition:all .2s;
+}
+.reader-nav-btn:hover{border-color:var(--gold);color:var(--gold)}
+.chap-sel{
+  background:var(--bg3);border:1px solid var(--border2);color:var(--text);
+  padding:7px 12px;border-radius:2px;font-family:'Playfair Display',serif;font-size:11px;outline:none;
+}
+.reader-pages{
+  max-width:800px;margin:0 auto;padding:40px 20px;
+  display:flex;flex-direction:column;gap:2px;
+}
+.reader-page-img{
+  width:100%;background:var(--bg3);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text3);font-size:13px;font-family:'Playfair Display',serif;
+  border-radius:2px;overflow:hidden;
+}
+.reader-page-img img{width:100%;display:block}
+.reader-bottom{
+  max-width:800px;margin:0 auto;padding:20px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid var(--border);
+}
+
+/* ========== WORLD PAGE ========== */
+.world-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.world-item{
+  background:var(--bg3);border:1px solid var(--border2);border-radius:4px;
+  padding:28px;position:relative;overflow:hidden;
+  transition:border-color .3s;cursor:default;
+}
+.world-item:hover{border-color:rgba(201,168,76,0.25)}
+.world-item::after{
+  content:'';position:absolute;top:0;right:0;
+  width:60px;height:60px;
+  background:radial-gradient(circle at top right,rgba(201,168,76,0.06),transparent);
+}
+.world-item-icon{font-size:32px;margin-bottom:14px}
+.world-item-title{font-family:'Playfair Display',serif;font-size:18px;color:var(--gold2);margin-bottom:8px}
+.world-item-alt{font-size:11px;letter-spacing:2px;color:var(--rust2);margin-bottom:10px;font-family:'Playfair Display',serif}
+.world-item-desc{font-size:14px;color:var(--text2);line-height:1.7}
+.world-level{
+  display:inline-block;padding:3px 10px;
+  background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);
+  border-radius:2px;font-size:11px;color:var(--gold);
+  font-family:'Playfair Display',serif;letter-spacing:1px;margin-bottom:10px;
+}
+
+/* ========== ABOUT PAGE ========== */
+.about-hero{
+  padding:80px;background:linear-gradient(135deg,var(--bg2),var(--bg));
+  border-bottom:1px solid var(--border);
+}
+.about-content{padding:60px 80px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.about-block-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold2);margin-bottom:16px}
+.about-text{font-size:16px;color:var(--text2);line-height:1.9}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .6s ease both}
+.fade-up-1{animation-delay:.1s}
+.fade-up-2{animation-delay:.2s}
+.fade-up-3{animation-delay:.3s}
+.fade-up-4{animation-delay:.4s}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hero-content{padding:0 24px}
+  .section{padding:40px 24px}
+  footer{padding:24px;flex-direction:column;gap:12px;text-align:center}
+  .hero-stats{right:24px;bottom:40px;gap:24px}
+  .world-grid{grid-template-columns:1fr}
+  .about-content{grid-template-columns:1fr;gap:32px}
+  .author-card{flex-direction:column}
+  .reader-header{padding:10px 16px}
+}
+
+/* CHAPTER GRID LAYOUT */
+.chap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:20px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showPage('home')">STORM ABOVE</a>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')" class="active" id="nav-home">Trang Chủ</a>
+    <a href="#" onclick="showPage('chapters')" id="nav-chapters">Đọc Truyện</a>
+    <a href="#" onclick="showPage('world')" id="nav-world">Thế Giới</a>
+    <a href="#" onclick="showPage('about')" id="nav-about">Tác Giả</a>
+  </div>
+  <button class="nav-btn" onclick="showPage('chapters')">ĐỌC NGAY →</button>
+</nav>
+
+<!-- ===== HOME PAGE ===== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="gear-bg">⚙</div>
+    <div class="gear-bg2">⚙</div>
+    <div class="hero-content">
+      <div class="hero-eyebrow fade-up">VŨ ĐIỆU KHAI NGUYÊN</div>
+      <div class="hero-title fade-up fade-up-1">STORM<br>ABOVE</div>
+      <div class="hero-subtitle fade-up fade-up-2">Bầu trời không phải một khoảng trống. Nó là một hệ thống.</div>
+      <p class="hero-desc fade-up fade-up-3">
+        Ở <strong>Vành Đai Thấp</strong>, nơi Làng Tro treo lơ lửng giữa mây và bóng tối —
+        một thợ sửa tên <strong>Kael</strong> sắp chạm vào bí mật sẽ làm rung chuyển cả bầu trời.
+      </p>
+      <div class="hero-actions fade-up fade-up-4">
+        <button class="btn-gold" onclick="showReader('chuong-1')">📖 ĐỌC CHƯƠNG 1</button>
+        <button class="btn-steel" onclick="showPage('world')">🗺 THẾ GIỚI</button>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">1</div><div class="stat-label">Chương</div></div>
+      <div class="stat"><div class="stat-num">2026</div><div class="stat-label">Năm ra mắt</div></div>
+      <div class="stat"><div class="stat-num">∞</div><div class="stat-label">Bầu trời</div></div>
+    </div>
+  </div>
+
+  <div class="ornament">◆ ⚙ ◆</div>
+
+  <!-- LATEST CHAPTERS -->
+  <div class="section">
+    <div class="section-label">Mới nhất</div>
+    <div class="section-title">Chương Mới Cập Nhật</div>
+    <p class="section-desc">Theo dõi hành trình của Kael qua từng chương — mỗi trang là một mảnh ghép của bầu trời bí ẩn.</p>
+    <div class="chap-grid">
+      <div class="chapter-featured" onclick="showReader('chuong-1')">
+        <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#1a1205)">
+          <!-- Placeholder - replace with actual cover image -->
+          <img class="chap-cover-img" src="chuong-1/00_Trang_Tieu_De_Chuong_1.png" alt="Chương 1" onerror="this.style.display='none'">
+          <div class="chap-overlay">
+            <div class="chap-num">CHƯƠNG 01</div>
+            <div class="chap-title">Dưới Phao Nam</div>
+          </div>
+        </div>
+        <div class="chap-info">
+          <span class="chap-date">Tháng 4, 2026</span>
+          <span class="chap-badge badge-new">MỚI</span>
+        </div>
+      </div>
+
+      <!-- Placeholder chapters -->
+      <div class="chapter-featured" style="opacity:0.4;cursor:not-allowed">
+        <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#0a0d0a);height:220px">
+          <div style="text-align:center;color:var(--text3)">
+            <div style="font-size:32px;margin-bottom:8px">🔒</div>
+            <div style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px">SẮP RA MẮT</div>
+          </div>
+          <div class="chap-overlay">
+            <div class="chap-num">CHƯƠNG 02</div>
+            <div class="chap-title">???</div>
+          </div>
+        </div>
+        <div class="chap-info">
+          <span class="chap-date">Sắp ra mắt</span>
+          <span class="chap-badge badge-read">CHỜ</span>
+        </div>
+      </div>
+
+      <div class="chapter-featured" style="opacity:0.4;cursor:not-allowed">
+        <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#0a0d0a);height:220px">
+          <div style="text-align:center;color:var(--text3)">
+            <div style="font-size:32px;margin-bottom:8px">🔒</div>
+            <div style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px">SẮP RA MẮT</div>
+          </div>
+          <div class="chap-overlay">
+            <div class="chap-num">CHƯƠNG 03</div>
+            <div class="chap-title">???</div>
+          </div>
+        </div>
+        <div class="chap-info">
+          <span class="chap-date">Sắp ra mắt</span>
+          <span class="chap-badge badge-read">CHỜ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ornament">◆ ⚙ ◆</div>
+
+  <!-- WORLD TEASER -->
+  <div class="section">
+    <div class="section-label">Thế giới</div>
+    <div class="section-title">Tầng Mây</div>
+    <p class="section-desc">Bầu trời được chia thành nhiều tầng — mỗi tầng là một thế giới riêng với luật lệ, quyền lực và bí mật của riêng nó.</p>
+    <div class="world-card" onclick="showPage('world')">
+      <div class="world-card-icon">🗺️</div>
+      <div class="world-card-content">
+        <div class="world-card-title">Sơ Đồ Tầng Mây</div>
+        <div class="world-card-desc">Từ Tầng Thượng / Thiên Trục (+12,000 mây) đến Kho Lưu Trữ Mây sâu thẳm — khám phá cấu trúc của một thế giới lơ lửng giữa không trung. Làng Tro nằm ở mốc ±0, nơi Kael bắt đầu hành trình của mình.</div>
+      </div>
+      <div style="color:var(--gold);font-size:24px;flex-shrink:0">→</div>
+    </div>
+  </div>
+
+  <div class="ornament">◆ ⚙ ◆</div>
+
+  <!-- SUPPORT -->
+  <div class="section">
+    <div class="support-box">
+      <div class="support-title">Ủng Hộ Storm Above</div>
+      <p class="support-desc">
+        Mỗi chương là hàng trăm giờ vẽ và viết. Nếu bạn thích thế giới này, hãy ủng hộ tác giả để hành trình tiếp tục.
+      </p>
+      <div class="support-btns">
+        <button class="btn-coffee" onclick="alert('Link ủng hộ sẽ được cập nhật!')">☕ MUA CHO TÁC GIẢ MỘT LY CÀ PHÊ</button>
+        <button class="btn-discord" onclick="alert('Link Discord sẽ được cập nhật!')">💬 THAM GIA CỘNG ĐỒNG</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== CHAPTERS PAGE ===== -->
+<div id="page-chapters" class="page">
+  <div class="section">
+    <div class="section-label">Storm Above</div>
+    <div class="section-title">Danh Sách Chương</div>
+    <p class="section-desc">Tất cả các chương của Storm Above — Vũ Điệu Khai Nguyên.</p>
+
+    <!-- Prologue/Intro -->
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:4px;overflow:hidden;margin-bottom:24px">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(201,168,76,0.03)">
+        <span style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:3px;color:var(--text3)">GIỚI THIỆU</span>
+      </div>
+      <table class="chap-table">
+        <tr onclick="showReader('intro')">
+          <td class="td-num">INTRO</td>
+          <td class="td-title">Giới Thiệu — Thế Giới của Storm Above</td>
+          <td class="td-new"><span class="chap-badge badge-new">MỚI</span></td>
+          <td class="td-date">Tháng 4, 2026</td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Chapters -->
+    <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:4px;overflow:hidden">
+      <div style="padding:14px 20px;border-bottom:1px solid var(--border);background:rgba(201,168,76,0.03)">
+        <span style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:3px;color:var(--text3)">CHƯƠNG CHÍNH</span>
+      </div>
+      <table class="chap-table">
+        <tr onclick="showReader('chuong-1')">
+          <td class="td-num">CH. 01</td>
+          <td class="td-title">Dưới Phao Nam</td>
+          <td class="td-new"><span class="chap-badge badge-new">MỚI</span></td>
+          <td class="td-date">Tháng 4, 2026</td>
+        </tr>
+        <tr style="opacity:0.4;cursor:not-allowed">
+          <td class="td-num">CH. 02</td>
+          <td class="td-title" style="color:var(--text3)">Sắp ra mắt...</td>
+          <td class="td-new"></td>
+          <td class="td-date">???</td>
+        </tr>
+        <tr style="opacity:0.4;cursor:not-allowed">
+          <td class="td-num">CH. 03</td>
+          <td class="td-title" style="color:var(--text3)">Sắp ra mắt...</td>
+          <td class="td-new"></td>
+          <td class="td-date">???</td>
+        </tr>
+      </table>
+    </div>
+
+    <div style="margin-top:32px">
+      <div class="support-box">
+        <div class="support-title" style="font-size:20px">Muốn đọc sớm hơn?</div>
+        <p class="support-desc" style="font-size:14px">Ủng hộ tác giả để nhận thông báo chapter mới sớm nhất và các nội dung độc quyền.</p>
+        <div class="support-btns">
+          <button class="btn-coffee" onclick="alert('Sắp có!')">☕ DONATE ĐỂ ĐỌC SỚM</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WORLD PAGE ===== -->
+<div id="page-world" class="page">
+  <div class="section">
+    <div class="section-label">Bách Khoa</div>
+    <div class="section-title">Thế Giới Storm Above</div>
+    <p class="section-desc">Bầu trời không phải một khoảng trống. Nó là một hệ thống — với tầng lớp, luật lệ và những thành phố nổi đè bóng lên kẻ yếu.</p>
+
+    <div style="background:var(--bg3);border:1px solid rgba(201,168,76,0.2);border-radius:4px;padding:20px;margin-bottom:32px;text-align:center">
+      <div style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:3px;color:var(--text3);margin-bottom:8px">SƠ ĐỒ TẦNG MÂY</div>
+      <img src="worldmap.png" alt="Sơ đồ tầng mây" style="max-width:100%;border-radius:4px" onerror="this.parentElement.innerHTML='<div style=\'padding:40px;color:var(--text3);font-family:Cinzel,serif;font-size:13px;letter-spacing:2px\'>🗺️<br><br>SƠ ĐỒ TẦNG MÂY<br><small style=\'font-size:11px\'>Upload worldmap.png để hiển thị</small></div>'">
+    </div>
+
+    <div class="world-grid">
+      <div class="world-item">
+        <div class="world-item-icon">👑</div>
+        <div class="world-level">+12,000 MÂY</div>
+        <div class="world-item-title">Tầng Thượng / Thiên Trục</div>
+        <div class="world-item-alt">TẦNG 1</div>
+        <div class="world-item-desc">Đỉnh cao nhất của bầu trời. Nơi quyền lực tập trung và ánh sáng chiếu xuống tất cả các tầng bên dưới. Không ai từ Vành Đai Thấp có thể lên đây mà không có giấy phép.</div>
+      </div>
+      <div class="world-item">
+        <div class="world-item-icon">🏙️</div>
+        <div class="world-level">+8,000 MÂY</div>
+        <div class="world-item-title">Vành Đai Trung</div>
+        <div class="world-item-alt">TẦNG 2</div>
+        <div class="world-item-desc">Khu vực thương mại và công nghiệp. Các thành phố nổi lớn neo đậu ở đây, kết nối nhau bằng cáp treo và tuyến vận tải khổng lồ.</div>
+      </div>
+      <div class="world-item">
+        <div class="world-item-icon">🏚️</div>
+        <div class="world-level">±0 MÂY (MỐC LÀNG TRO)</div>
+        <div class="world-item-title">Làng Tro</div>
+        <div class="world-item-alt">TẦNG 4 — ĐIỂM KHỞI ĐẦU</div>
+        <div class="world-item-desc">Nơi Kael sinh sống. Một khu định cư nhỏ bé, cũ kỹ treo lơ lửng ở mức ±0 — không cao, không thấp. Nơi những người bị bỏ lại phía sau tìm cách sống sót.</div>
+      </div>
+      <div class="world-item">
+        <div class="world-item-icon">💨</div>
+        <div class="world-level">-2,000 MÂY</div>
+        <div class="world-item-title">Trạm Gió Đứt</div>
+        <div class="world-item-alt">TẦNG 5</div>
+        <div class="world-item-desc">Khu vực nguy hiểm phía dưới Làng Tro. Gió mạnh, tầm nhìn kém. Nơi những chiếc máy cũ bị vứt bỏ — và những kẻ không còn nơi nào khác để đi.</div>
+      </div>
+      <div class="world-item">
+        <div class="world-item-icon">⛔</div>
+        <div class="world-level">-4,000 MÂY</div>
+        <div class="world-item-title">Tầng 2.5 / Vùng Bị Xóa</div>
+        <div class="world-item-alt">TẦNG 6 — CẤM VÀO</div>
+        <div class="world-item-desc">Không có trong bản đồ chính thức. Không có trong lịch sử. Nhưng nó tồn tại — và ai biết về nó đều biết tại sao người ta không nhắc đến nó.</div>
+      </div>
+      <div class="world-item">
+        <div class="world-item-icon">🌀</div>
+        <div class="world-level">-6,000 MÂY VÀ SÂU HƠN</div>
+        <div class="world-item-title">Kho Lưu Trữ Mây</div>
+        <div class="world-item-alt">TẦNG 7 — CHƯA ĐƯỢC KHÁM PHÁ</div>
+        <div class="world-item-desc">Điểm đến bí ẩn. Những mũi tên đứt đoạn trên sơ đồ chỉ về phía dưới — về một nơi mà không ai trở về để kể chuyện. Hay là họ không được phép kể?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ABOUT PAGE ===== -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <div class="section-label">Tác Giả</div>
+    <div class="section-title">Người Tạo Ra Bầu Trời</div>
+    <p class="section-desc">Storm Above là dự án truyện tranh tự sáng tác — một thế giới steampunk được xây dựng từ đam mê và những đêm thức khuya.</p>
+  </div>
+  <div class="about-content">
+    <div>
+      <div class="author-card">
+        <div class="author-avatar">✏️</div>
+        <div>
+          <div class="author-name">Tác Giả</div>
+          <div class="author-role">Viết & Vẽ Storm Above</div>
+          <div class="author-bio">"Tôi muốn tạo ra một thế giới mà người đọc có thể cảm nhận được sức nặng của bầu trời — và những người phải sống dưới đó."</div>
+          <div class="author-socials">
+            <button class="social-btn" onclick="alert('Sắp có!')">Facebook</button>
+            <button class="social-btn" onclick="alert('Sắp có!')">Instagram</button>
+            <button class="social-btn" onclick="alert('Sắp có!')">Discord</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="about-block-title">Về Storm Above</div>
+      <div class="about-text">
+        <p style="margin-bottom:16px">Storm Above — Vũ Điệu Khai Nguyên là câu chuyện về <strong style="color:var(--gold2)">Kael</strong>, một thợ sửa máy ở Làng Tro — khu định cư nghèo nàn treo lơ lửng ở mức ±0 mây.</p>
+        <p style="margin-bottom:16px">Trong một thế giới mà vị trí của bạn trên bầu trời quyết định mọi thứ, Kael chưa bao giờ nhìn lên phía trên. Cho đến ngày anh chạm vào một thứ không được phép tồn tại.</p>
+        <p style="color:var(--text3);font-style:italic">Thể loại: Steampunk · Phiêu lưu · Bí ẩn · Hành động</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== READER PAGE ===== -->
+<div id="page-reader" class="page">
+  <div class="reader-header">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="reader-nav-btn" onclick="showPage('chapters')">← DANH SÁCH</button>
+      <span class="reader-title" id="reader-chapter-title">CHƯƠNG 1 · DƯỚI PHAO NAM</span>
+    </div>
+    <div class="reader-nav">
+      <button class="reader-nav-btn">◀ TRƯỚC</button>
+      <select class="chap-sel">
+        <option>Chương 1: Dưới Phao Nam</option>
+      </select>
+      <button class="reader-nav-btn">SAU ▶</button>
+    </div>
+    <button class="reader-nav-btn" onclick="showPage('chapters')">✕ ĐÓNG</button>
+  </div>
+
+  <div class="reader-pages" id="reader-pages">
+    <!-- Pages injected by JS -->
+  </div>
+
+  <div class="reader-bottom">
+    <button class="btn-steel" onclick="showPage('chapters')">← Quay lại danh sách</button>
+    <button class="btn-gold" onclick="alert('Chương 2 sắp ra mắt! Hãy theo dõi tác giả.')">Chương tiếp theo ▶</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">⚙ STORM ABOVE</div>
+  <div class="footer-text">© 2026 Storm Above — Vũ Điệu Khai Nguyên<br>Toàn bộ nội dung thuộc bản quyền tác giả.</div>
+  <div class="footer-copy">MADE WITH ❤️</div>
+</footer>
+
+<script>
+// NAV MANAGEMENT
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  const navEl=document.getElementById('nav-'+name);
+  if(navEl)navEl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// READER
+const chapterData={
+  'chuong-1':{
+    title:'CHƯƠNG 1 · DƯỚI PHAO NAM',
+    // Add your actual image filenames here
+    pages:[
+      'chuong-1/00_Trang_Tieu_De_Chuong_1.png',
+      // 'chuong-1/trang-01.jpg',
+      // 'chuong-1/trang-02.jpg',
+      // ... add more pages
+    ]
+  },
+  'intro':{
+    title:'GIỚI THIỆU · THẾ GIỚI STORM ABOVE',
+    pages:[
+      'intro/gioi-thieu.png',
+      // add intro pages
+    ]
+  }
+};
+
+function showReader(chapId){
+  showPage('reader');
+  const chap=chapterData[chapId]||chapterData['chuong-1'];
+  document.getElementById('reader-chapter-title').textContent=chap.title;
+  const container=document.getElementById('reader-pages');
+  if(chap.pages.length>0){
+    container.innerHTML=chap.pages.map((src,i)=>`
+      <div class="reader-page-img">
+        <img src="${src}" alt="Trang ${i+1}" 
+          onerror="this.parentElement.style.height='300px';this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--text3);font-family:Cinzel,serif;font-size:12px;letter-spacing:2px\'>TRANG ${i+1}<br><small>Upload ảnh vào thư mục ${chapId}/</small></div>'"
+        >
+      </div>
+    `).join('');
+  } else {
+    container.innerHTML=`
+      <div style="text-align:center;padding:80px 20px;color:var(--text3)">
+        <div style="font-size:48px;margin-bottom:16px">📖</div>
+        <div style="font-family:'Playfair Display',serif;font-size:14px;letter-spacing:3px;margin-bottom:8px">CHƯƠNG ĐANG ĐƯỢC TẢI LÊN</div>
+        <div style="font-size:14px">Upload ảnh vào thư mục <code style="background:var(--bg4);padding:2px 8px;border-radius:2px">${chapId}/</code></div>
+      </div>
+    `;
+  }
+}
+</script>
+</body>
+</html>
