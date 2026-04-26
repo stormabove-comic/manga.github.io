@@ -470,6 +470,20 @@ footer{
         </div>
       </div>
 
+      <div class="chapter-featured" onclick="showReader('chuong-2')">
+        <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#1a1205)">
+          <img class="chap-cover-img" src="chuong-2/00_Trang_Tieu_De_Chuong_2.png" alt="Chương 2" onerror="this.style.display='none'">
+          <div class="chap-overlay">
+            <div class="chap-num">CHƯƠNG 02</div>
+            <div class="chap-title">Kết Chương 2</div>
+          </div>
+        </div>
+        <div class="chap-info">
+          <span class="chap-date">Tháng 4, 2026</span>
+          <span class="chap-badge badge-new">MỚI</span>
+        </div>
+      </div>
+
       <!-- Placeholder chapters -->
       <div class="chapter-featured" style="opacity:0.4;cursor:not-allowed">
         <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#0a0d0a);height:220px">
@@ -573,14 +587,14 @@ footer{
         <tr onclick="showReader('chuong-1')">
           <td class="td-num">CH. 01</td>
           <td class="td-title">Dưới Phao Nam</td>
-          <td class="td-new"><span class="chap-badge badge-new">MỚI</span></td>
+          <td class="td-new"></td>
           <td class="td-date">Tháng 4, 2026</td>
         </tr>
-        <tr style="opacity:0.4;cursor:not-allowed">
+        <tr onclick="showReader('chuong-2')">
           <td class="td-num">CH. 02</td>
-          <td class="td-title" style="color:var(--text3)">Sắp ra mắt...</td>
-          <td class="td-new"></td>
-          <td class="td-date">???</td>
+          <td class="td-title">Kết Chương 2</td>
+          <td class="td-new"><span class="chap-badge badge-new">MỚI</span></td>
+          <td class="td-date">Tháng 4, 2026</td>
         </tr>
         <tr style="opacity:0.4;cursor:not-allowed">
           <td class="td-num">CH. 03</td>
@@ -704,11 +718,12 @@ footer{
       <span class="reader-title" id="reader-chapter-title">CHƯƠNG 1 · DƯỚI PHAO NAM</span>
     </div>
     <div class="reader-nav">
-      <button class="reader-nav-btn">◀ TRƯỚC</button>
-      <select class="chap-sel">
-        <option>Chương 1: Dưới Phao Nam</option>
+      <button class="reader-nav-btn" id="btn-prev">◀ TRƯỚC</button>
+      <select class="chap-sel" id="chap-select" onchange="showReader(this.value)">
+        <option value="chuong-1">Chương 1: Dưới Phao Nam</option>
+        <option value="chuong-2">Chương 2: Kết Chương 2</option>
       </select>
-      <button class="reader-nav-btn">SAU ▶</button>
+      <button class="reader-nav-btn" id="btn-next-top">SAU ▶</button>
     </div>
     <button class="reader-nav-btn" onclick="showPage('chapters')">✕ ĐÓNG</button>
   </div>
@@ -718,8 +733,8 @@ footer{
   </div>
 
   <div class="reader-bottom">
-    <button class="btn-steel" onclick="showPage('chapters')">← Quay lại danh sách</button>
-    <button class="btn-gold" onclick="alert('Chương 2 sắp ra mắt! Hãy theo dõi tác giả.')">Chương tiếp theo ▶</button>
+    <button class="btn-steel" id="btn-back" onclick="showPage('chapters')">← Quay lại danh sách</button>
+    <button class="btn-gold" id="btn-next">Chương tiếp theo ▶</button>
   </div>
 </div>
 
@@ -766,40 +781,81 @@ const chapterData={
       'chuong-1/17_Trang_17.png',
       'chuong-1/18_Trang_18.png',
       'chuong-1/19_Trang_19.png',
-      'chuong-1/20_Trang_20_Ket_Chuong_1.png',
+    ]
+  },
+  'chuong-2':{
+    title:'CHƯƠNG 2 · KẾT CHƯƠNG 2',
+    pages:[
+      'chuong-2/00_Trang_Tieu_De_Chuong_2.png',
+      'chuong-2/01_Trang_01.png',
+      'chuong-2/02_Trang_02.png',
+      'chuong-2/03_Trang_03.png',
+      'chuong-2/04_Trang_04.png',
+      'chuong-2/05_Trang_05.png',
+      'chuong-2/06_Trang_06.png',
+      'chuong-2/07_Trang_07.png',
+      'chuong-2/08_Trang_08.png',
+      'chuong-2/09_Trang_09.png',
+      'chuong-2/10_Trang_10.png',
+      'chuong-2/11_Trang_11.png',
+      'chuong-2/12_Trang_12.png',
+      'chuong-2/13_Trang_13.png',
+      'chuong-2/14_Trang_14.png',
+      'chuong-2/15_Trang_15.png',
+      'chuong-2/16_Trang_16.png',
+      'chuong-2/17_Trang_17.png',
+      'chuong-2/18_Trang_18.png',
+      'chuong-2/19_Trang_19.png',
+      'chuong-2/20_Trang_20_Ket_Chuong_2.png',
     ]
   },
   'intro':{
     title:'GIỚI THIỆU · THẾ GIỚI STORM ABOVE',
     pages:[
       'intro/gioi-thieu.png',
-      // add intro pages
     ]
   }
 };
 
 function showReader(chapId){
   showPage('reader');
+  const chapters=['chuong-1','chuong-2'];
   const chap=chapterData[chapId]||chapterData['chuong-1'];
   document.getElementById('reader-chapter-title').textContent=chap.title;
-  const container=document.getElementById('reader-pages');
-  if(chap.pages.length>0){
-    container.innerHTML=chap.pages.map((src,i)=>`
-      <div class="reader-page-img">
-        <img src="${src}" alt="Trang ${i+1}" 
-          onerror="this.parentElement.style.height='300px';this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:40px;text-align:center;color:var(--text3);font-family:Cinzel,serif;font-size:12px;letter-spacing:2px\'>TRANG ${i+1}<br><small>Upload ảnh vào thư mục ${chapId}/</small></div>'"
-        >
-      </div>
-    `).join('');
-  } else {
-    container.innerHTML=`
-      <div style="text-align:center;padding:80px 20px;color:var(--text3)">
-        <div style="font-size:48px;margin-bottom:16px">📖</div>
-        <div style="font-family:'Playfair Display',serif;font-size:14px;letter-spacing:3px;margin-bottom:8px">CHƯƠNG ĐANG ĐƯỢC TẢI LÊN</div>
-        <div style="font-size:14px">Upload ảnh vào thư mục <code style="background:var(--bg4);padding:2px 8px;border-radius:2px">${chapId}/</code></div>
-      </div>
-    `;
+  const sel=document.getElementById('chap-select');
+  if(sel)sel.value=chapId;
+  const idx=chapters.indexOf(chapId);
+
+  // Prev button
+  const prevBtn=document.getElementById('btn-prev');
+  if(prevBtn){
+    if(idx>0){prevBtn.onclick=()=>showReader(chapters[idx-1]);prevBtn.style.opacity='1';}
+    else{prevBtn.onclick=()=>showPage('chapters');prevBtn.style.opacity='0.4';}
   }
+  // Next buttons
+  const setNext=(btn)=>{
+    if(!btn)return;
+    if(idx<chapters.length-1){
+      btn.textContent='Chương tiếp theo ▶';
+      btn.onclick=()=>showReader(chapters[idx+1]);
+    } else {
+      btn.textContent='Hết chương mới nhất ✓';
+      btn.onclick=()=>alert('Đón đọc chương tiếp theo sớm nhé!');
+    }
+  };
+  setNext(document.getElementById('btn-next'));
+  setNext(document.getElementById('btn-next-top'));
+
+  // Render pages
+  const container=document.getElementById('reader-pages');
+  container.innerHTML=chap.pages.map((src,i)=>`
+    <div class="reader-page-img">
+      <img src="${src}" alt="Trang ${i+1}"
+        onerror="this.parentElement.style.height='200px';this.style.display='none';this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center;color:var(--text3);font-size:12px\'>Trang ${i+1} — chưa upload</div>'"
+      >
+    </div>
+  `).join('');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
