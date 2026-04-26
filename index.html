@@ -475,7 +475,7 @@ footer{
           <img class="chap-cover-img" src="chuong-2/00_Trang_Tieu_De_Chuong_2.png" alt="Chương 2" onerror="this.style.display='none'">
           <div class="chap-overlay">
             <div class="chap-num">CHƯƠNG 02</div>
-            <div class="chap-title">Thuế Bầu Trời</div>
+            <div class="chap-title">Kết Chương 2</div>
           </div>
         </div>
         <div class="chap-info">
@@ -484,38 +484,17 @@ footer{
         </div>
       </div>
 
-      <!-- Placeholder chapters -->
-      <div class="chapter-featured" style="opacity:0.4;cursor:not-allowed">
-        <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#0a0d0a);height:220px">
-          <div style="text-align:center;color:var(--text3)">
-            <div style="font-size:32px;margin-bottom:8px">🔒</div>
-            <div style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px">SẮP RA MẮT</div>
-          </div>
-          <div class="chap-overlay">
-            <div class="chap-num">CHƯƠNG 02</div>
-            <div class="chap-title">???</div>
-          </div>
-        </div>
-        <div class="chap-info">
-          <span class="chap-date">Sắp ra mắt</span>
-          <span class="chap-badge badge-read">CHỜ</span>
-        </div>
-      </div>
-
-      <div class="chapter-featured" style="opacity:0.4;cursor:not-allowed">
-        <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#0a0d0a);height:220px">
-          <div style="text-align:center;color:var(--text3)">
-            <div style="font-size:32px;margin-bottom:8px">🔒</div>
-            <div style="font-family:'Playfair Display',serif;font-size:11px;letter-spacing:2px">SẮP RA MẮT</div>
-          </div>
+      <div class="chapter-featured" onclick="showReader('chuong-3')">
+        <div class="chap-cover" style="background:linear-gradient(160deg,#0d0f1a,#1a1205)">
+          <img class="chap-cover-img" src="chuong-3/00_Trang_Tieu_De_Chuong_3.png" alt="Chương 3" onerror="this.style.display='none'">
           <div class="chap-overlay">
             <div class="chap-num">CHƯƠNG 03</div>
-            <div class="chap-title">???</div>
+            <div class="chap-title">Tín Hiệu</div>
           </div>
         </div>
         <div class="chap-info">
-          <span class="chap-date">Sắp ra mắt</span>
-          <span class="chap-badge badge-read">CHỜ</span>
+          <span class="chap-date">Tháng 4, 2026</span>
+          <span class="chap-badge badge-new">MỚI</span>
         </div>
       </div>
     </div>
@@ -592,12 +571,18 @@ footer{
         </tr>
         <tr onclick="showReader('chuong-2')">
           <td class="td-num">CH. 02</td>
-          <td class="td-title">Thuế Bầu Trời</td>
+          <td class="td-title">Kết Chương 2</td>
+          <td class="td-new"></td>
+          <td class="td-date">Tháng 4, 2026</td>
+        </tr>
+        <tr onclick="showReader('chuong-3')">
+          <td class="td-num">CH. 03</td>
+          <td class="td-title">Tín Hiệu</td>
           <td class="td-new"><span class="chap-badge badge-new">MỚI</span></td>
           <td class="td-date">Tháng 4, 2026</td>
         </tr>
         <tr style="opacity:0.4;cursor:not-allowed">
-          <td class="td-num">CH. 03</td>
+          <td class="td-num">CH. 04</td>
           <td class="td-title" style="color:var(--text3)">Sắp ra mắt...</td>
           <td class="td-new"></td>
           <td class="td-date">???</td>
@@ -721,7 +706,8 @@ footer{
       <button class="reader-nav-btn" id="btn-prev">◀ TRƯỚC</button>
       <select class="chap-sel" id="chap-select" onchange="showReader(this.value)">
         <option value="chuong-1">Chương 1: Dưới Phao Nam</option>
-        <option value="chuong-2">Chương 2: Thuế Bầu Trời</option>
+        <option value="chuong-2">Chương 2: Kết Chương 2</option>
+        <option value="chuong-3">Chương 3: Tín Hiệu</option>
       </select>
       <button class="reader-nav-btn" id="btn-next-top">SAU ▶</button>
     </div>
@@ -784,7 +770,7 @@ const chapterData={
     ]
   },
   'chuong-2':{
-    title:'CHƯƠNG 2 · Thuế Bầu Trời',
+    title:'CHƯƠNG 2 · KẾT CHƯƠNG 2',
     pages:[
       'chuong-2/00_Trang_Tieu_De_Chuong_2.png',
       'chuong-2/01_Trang_01.png',
@@ -809,6 +795,32 @@ const chapterData={
       'chuong-2/20_Trang_20_Ket_Chuong_2.png',
     ]
   },
+  'chuong-3':{
+    title:'CHƯƠNG 3 · TÍN HIỆU',
+    pages:[
+      'chuong-3/00_Trang_Tieu_De_Chuong_3.png',
+      'chuong-3/01_Trang_01.png',
+      'chuong-3/02_Trang_02.png',
+      'chuong-3/03_Trang_03.png',
+      'chuong-3/04_Trang_04.png',
+      'chuong-3/05_Trang_05.png',
+      'chuong-3/06_Trang_06.png',
+      'chuong-3/07_Trang_07.png',
+      'chuong-3/08_Trang_08.png',
+      'chuong-3/09_Trang_09.png',
+      'chuong-3/10_Trang_10.png',
+      'chuong-3/11_Trang_11.png',
+      'chuong-3/12_Trang_12.png',
+      'chuong-3/13_Trang_13.png',
+      'chuong-3/14_Trang_14.png',
+      'chuong-3/15_Trang_15.png',
+      'chuong-3/16_Trang_16.png',
+      'chuong-3/17_Trang_17.png',
+      'chuong-3/18_Trang_18.png',
+      'chuong-3/19_Trang_19.png',
+      'chuong-3/20_Trang_20_Ket_Chuong_3.png',
+    ]
+  },
   'intro':{
     title:'GIỚI THIỆU · THẾ GIỚI STORM ABOVE',
     pages:[
@@ -819,7 +831,7 @@ const chapterData={
 
 function showReader(chapId){
   showPage('reader');
-  const chapters=['chuong-1','chuong-2'];
+  const chapters=['chuong-1','chuong-2','chuong-3'];
   const chap=chapterData[chapId]||chapterData['chuong-1'];
   document.getElementById('reader-chapter-title').textContent=chap.title;
   const sel=document.getElementById('chap-select');
